@@ -1,8 +1,9 @@
 version: '3'
+dotenv: ['.env']
 vars:
   PAGES:
     - https://fabtcg.com/en/resources/card-galleries/welcome-rathe-booster/
-    # - https://fabtcg.com/en/resources/card-galleries/welcome-rathe-unlimited-booster/
+    - https://fabtcg.com/en/resources/card-galleries/welcome-rathe-unlimited-booster/
     # - https://fabtcg.com/en/resources/card-galleries/arcane-rising/
     # - https://fabtcg.com/en/resources/card-galleries/arcane-rising-unlimited-booster/
     # - https://fabtcg.com/en/resources/card-galleries/crucible-war-booster/
@@ -21,21 +22,20 @@ vars:
     # - https://fabtcg.com/en/resources/card-galleries/bright-lights/
     # - https://fabtcg.com/en/resources/card-galleries/heavy-hitters/
     # - https://fabtcg.com/en/resources/card-galleries/part-the-mistveil-en/
-  DOWNLOAD_DIR: $HOME/Downloads/fab
   DOWNLOAD_CONCURRENCY: 3
   DOCKER_VOLUME_NAME: fab-cards
 tasks:
   build:
     cmds:
-      - docker build . -f ./docker/Dockerfile.image-scraper -t fab/image-scraper:latest
+      - ./taskfile-scripts/build-docker-image-scraper.sh
   scrape:
+    env:
+      LOG_LEVEL: info
     cmds:
-      - mkdir -p {{$.DOWNLOAD_DIR}}
       - for: {var: PAGES}
         cmd: |
-          docker run --rm \
-          -e PAGE_URL={{$.ITEM}} \
-          -e DOWNLOAD_DIR=/downloads \
-          -e DOWNLOAD_CONCURRENCY={{$.DOWNLOAD_CONCURRENCY}} \
-          -v {{$.DOCKER_VOLUME_NAME}}:/downloads \
-          fab/image-scraper:latest
+          PAGE_URL={{$.ITEM}} \
+          LOG_LEVEL={{.LOG_LEVEL}} \
+          DOWNLOAD_CONCURRENCY={{$.DOWNLOAD_CONCURRENCY}} \
+          DOCKER_VOLUME_NAME={{$.DOCKER_VOLUME_NAME}} \
+          ./taskfile-scripts/scrape-images-from-page.sh
