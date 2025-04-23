@@ -1,29 +1,5 @@
 version: '3'
 dotenv: ['.env']
-vars:
-  PAGES:
-    - https://fabtcg.com/en/resources/card-galleries/welcome-rathe-booster/
-    - https://fabtcg.com/en/resources/card-galleries/welcome-rathe-unlimited-booster/
-    # - https://fabtcg.com/en/resources/card-galleries/arcane-rising/
-    # - https://fabtcg.com/en/resources/card-galleries/arcane-rising-unlimited-booster/
-    # - https://fabtcg.com/en/resources/card-galleries/crucible-war-booster/
-    # - https://fabtcg.com/en/resources/card-galleries/crucible-war-unlimited/
-    # - https://fabtcg.com/en/resources/card-galleries/monarch-booster/
-    # - https://fabtcg.com/en/resources/card-galleries/monarch-booster-unlimited/
-    # - https://fabtcg.com/en/resources/card-galleries/tales-aria-booster/
-    # - https://fabtcg.com/en/resources/card-galleries/tales-aria-unlimited/
-    # - https://fabtcg.com/en/resources/card-galleries/everfest-booster/
-    # - https://fabtcg.com/en/resources/card-galleries/history-pack-1-en-booster/
-    # - https://fabtcg.com/en/resources/card-galleries/uprising/
-    # - https://fabtcg.com/en/resources/card-galleries/dynasty/
-    # - https://fabtcg.com/en/resources/card-galleries/outsiders/
-    # - https://fabtcg.com/en/resources/card-galleries/dusk-till-dawn/
-    # - https://fabtcg.com/en/resources/card-galleries/round-the-table-tcc-x-lss/
-    # - https://fabtcg.com/en/resources/card-galleries/bright-lights/
-    # - https://fabtcg.com/en/resources/card-galleries/heavy-hitters/
-    # - https://fabtcg.com/en/resources/card-galleries/part-the-mistveil-en/
-  DOWNLOAD_CONCURRENCY: 3
-  DOCKER_VOLUME_NAME: fab-cards
 tasks:
   build:
     cmds:
@@ -31,6 +7,30 @@ tasks:
   scrape:
     env:
       LOG_LEVEL: info
+    vars:
+      DOWNLOAD_CONCURRENCY: 3
+      DOCKER_VOLUME_NAME: fab-cards
+      PAGES:
+        - https://fabtcg.com/en/resources/card-galleries/welcome-rathe-booster/
+        - https://fabtcg.com/en/resources/card-galleries/welcome-rathe-unlimited-booster/
+        # - https://fabtcg.com/en/resources/card-galleries/arcane-rising/
+        # - https://fabtcg.com/en/resources/card-galleries/arcane-rising-unlimited-booster/
+        # - https://fabtcg.com/en/resources/card-galleries/crucible-war-booster/
+        # - https://fabtcg.com/en/resources/card-galleries/crucible-war-unlimited/
+        # - https://fabtcg.com/en/resources/card-galleries/monarch-booster/
+        # - https://fabtcg.com/en/resources/card-galleries/monarch-booster-unlimited/
+        # - https://fabtcg.com/en/resources/card-galleries/tales-aria-booster/
+        # - https://fabtcg.com/en/resources/card-galleries/tales-aria-unlimited/
+        # - https://fabtcg.com/en/resources/card-galleries/everfest-booster/
+        # - https://fabtcg.com/en/resources/card-galleries/history-pack-1-en-booster/
+        # - https://fabtcg.com/en/resources/card-galleries/uprising/
+        # - https://fabtcg.com/en/resources/card-galleries/dynasty/
+        # - https://fabtcg.com/en/resources/card-galleries/outsiders/
+        # - https://fabtcg.com/en/resources/card-galleries/dusk-till-dawn/
+        # - https://fabtcg.com/en/resources/card-galleries/round-the-table-tcc-x-lss/
+        # - https://fabtcg.com/en/resources/card-galleries/bright-lights/
+        # - https://fabtcg.com/en/resources/card-galleries/heavy-hitters/
+        # - https://fabtcg.com/en/resources/card-galleries/part-the-mistveil-en/
     cmds:
       - for: {var: PAGES}
         cmd: |
