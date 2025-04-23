@@ -1,0 +1,32 @@
+[project]
+name = "flesh_and_blood"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "GaborZeller",email = "gabriel.d.celery@gmail.com"}
+]
+packages = [
+    { include = "flesh_and_blood", from = "src" }
+]
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "aiohttp (>=3.11.18,<4.0.0)",
+    "requests (>=2.32.3,<3.0.0)",
+    "bs4 (>=0.0.2,<0.0.3)",
+    "python-json-logger (>=3.3.0,<4.0.0)"
+]
+
+# [tool.poetry.group.scraping]
+# optional = true
+# dependencies = [
+# ]
+
+[tool.poetry.scripts]
+scrape_images = "flesh_and_blood.scripts.scrape_images:main"
+train_model = "flesh_and_blood.scripts.train-model:main"
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
