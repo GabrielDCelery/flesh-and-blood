@@ -3,9 +3,9 @@ import logging
 from pythonjsonlogger.json import JsonFormatter
 
 
-def setup_logging():
+def setup_logging(log_level: str):
     logger = logging.getLogger()
-    logger.setLevel(logging.DEBUG)
+    logger.setLevel(log_level.upper())
     logHandler = logging.StreamHandler()
     formatter = JsonFormatter(
         "%(asctime)s %(levelname)s %(name)s %(message)s",

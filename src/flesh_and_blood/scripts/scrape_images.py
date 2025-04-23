@@ -25,9 +25,10 @@ def main():
     # Your main application logic here
     url = os.environ["PAGE_URL"]
     download_dir = os.environ["DOWNLOAD_DIR"]
+    log_level = os.environ["LOG_LEVEL"]
     concurrency = int(os.environ["DOWNLOAD_CONCURRENCY"])
 
-    logging_config.setup_logging()
+    logging_config.setup_logging(log_level)
     logger.info(
         "Starting the application", extra={"url": url, "download_dir": download_dir}
     )
@@ -111,7 +112,7 @@ async def download_image(
         file_path = os.path.join(download_dir, file_name)
         is_file = os.path.isfile(file_path)
         if is_file:
-            logger.info(
+            logger.debug(
                 f"skipping downloading already existing file",
                 extra={"file_name": file_name, "file_path": file_path},
             )
@@ -124,7 +125,7 @@ async def download_image(
                 return
             with open(file_path, "wb") as f:
                 f.write(await response.read())
-                logger.info(f"saved file", extra={"file_path": file_path})
+                logger.debug(f"saved file", extra={"file_path": file_path})
             await asyncio.sleep(random.uniform(1, concurrency))
     except aiohttp.ClientError as e:
         logger.error(
