@@ -8,7 +8,7 @@ import requests
 from aiohttp.client import ClientSession
 from bs4 import BeautifulSoup, Tag
 
-from flesh_and_blood.common import logging_config
+from fab_image_scraper import logging_config
 
 logger = logging.getLogger(__name__)
 

@@ -1,20 +1,23 @@
-FROM python:3.13-slim as builder
+FROM python:3.13-alpine as builder
 
 # Install poetry
 RUN pip install poetry
 
+# ENV POETRY_VIRTUALENVS_IN_PROJECT=true \
+#     POETRY_NO_INTERACTION=1
+
 # Copy project files
 WORKDIR /app
 COPY pyproject.toml poetry.lock ./
-COPY src ./src
 COPY README.md ./
+COPY src ./src
 
 # Install dependencies
 RUN poetry config virtualenvs.create false && \
     poetry install --only main --no-interaction --no-ansi
 
 # Final stage
-FROM python:3.13-slim
+FROM python:3.13-alpine
 
 RUN mkdir /downloads
 
@@ -22,7 +25,7 @@ COPY --from=builder /usr/local/lib/python3.13/site-packages /usr/local/lib/pytho
 COPY --from=builder /app/src /app/src
 
 # Set Python path
-ENV PYTHONPATH=/app/src
+#ENV PYTHONPATH=/app/fabimage-scraper
 
 # Run script1
-CMD ["python", "-m", "flesh_and_blood.scripts.scrape_images"]
+CMD ["python", "-m", "fab_image_scraper"]
