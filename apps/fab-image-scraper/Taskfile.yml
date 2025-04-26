@@ -4,7 +4,6 @@ tasks:
   build:
     cmds:
       - ./scripts/build-docker-image-scraper.sh
-  scrape:
   run:
     env:
       LOG_LEVEL: info
