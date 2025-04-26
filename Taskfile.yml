@@ -1,5 +1,4 @@
 version: '3'
-dotenv: ['.env']
 includes:
   image-scraper:
     dir: ./apps/fab-image-scraper/
@@ -8,6 +7,6 @@ tasks:
   build:
     cmds:
       - task: image-scraper:build
-  scrape:
+  run-scraper:
     cmds:
       - task: image-scraper:run

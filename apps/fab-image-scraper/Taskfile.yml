@@ -34,7 +34,7 @@ tasks:
       - for: {var: PAGES}
         cmd: |
           PAGE_URL={{$.ITEM}} \
-          LOG_LEVEL={{.LOG_LEVEL}} \
+          LOG_LEVEL=${LOG_LEVEL} \
           DOWNLOAD_CONCURRENCY={{$.DOWNLOAD_CONCURRENCY}} \
           DOCKER_VOLUME_NAME={{$.DOCKER_VOLUME_NAME}} \
           ./scripts/scrape-images-from-page.sh
