@@ -2,12 +2,12 @@ version: '3'
 dotenv: ['.env']
 includes:
   image-scraper:
-    dir: ./apps/image-scraper/
-    taskfile: ./apps/image-scraper/Taskfile.yml
+    dir: ./apps/fab-image-scraper/
+    taskfile: ./apps/fab-image-scraper/Taskfile.yml
 tasks:
   build:
     cmds:
-      - task: image-scraper:buld
+      - task: image-scraper:build
   scrape:
     cmds:
-      - task: image-scraper:scrape
+      - task: image-scraper:run
