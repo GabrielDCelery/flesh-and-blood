@@ -15,6 +15,7 @@ COPY src ./src
 RUN poetry install --only main --no-interaction --no-ansi
 
 # Final stage
+#
 FROM python:3.12-slim-bullseye as runner
 
 RUN mkdir /downloads
@@ -24,9 +25,7 @@ WORKDIR /app
 COPY --from=builder /app/.venv /app/.venv
 COPY --from=builder /app/src /app/src
 
-# Set Python path
 ENV PATH=/app/.venv/bin:$PATH
 ENV PYTHONPATH=/app/src:$PATH
 
-# Run script1
 CMD ["/app/.venv/bin/python", "-m", "fab_image_scraper"]
