@@ -1,31 +1,32 @@
-FROM python:3.13-alpine as builder
+FROM python:3.12-slim-bullseye as builder
 
-# Install poetry
 RUN pip install poetry
 
-# ENV POETRY_VIRTUALENVS_IN_PROJECT=true \
-#     POETRY_NO_INTERACTION=1
+ENV POETRY_VIRTUALENVS_CREATE=true \
+    POETRY_NO_INTERACTION=1 \
+    POETRY_VIRTUALENVS_IN_PROJECT=true
 
-# Copy project files
 WORKDIR /app
+
 COPY pyproject.toml poetry.lock ./
 COPY README.md ./
 COPY src ./src
 
-# Install dependencies
-RUN poetry config virtualenvs.create false && \
-    poetry install --only main --no-interaction --no-ansi
+RUN poetry install --only main --no-interaction --no-ansi
 
 # Final stage
-FROM python:3.13-alpine
+FROM python:3.12-slim-bullseye as runner
 
 RUN mkdir /downloads
 
-COPY --from=builder /usr/local/lib/python3.13/site-packages /usr/local/lib/python3.13/site-packages
+WORKDIR /app
+
+COPY --from=builder /app/.venv /app/.venv
 COPY --from=builder /app/src /app/src
 
 # Set Python path
-#ENV PYTHONPATH=/app/fabimage-scraper
+ENV PATH=/app/.venv/bin:$PATH
+ENV PYTHONPATH=/app/src:$PATH
 
 # Run script1
-CMD ["python", "-m", "fab_image_scraper"]
+CMD ["/app/.venv/bin/python", "-m", "fab_image_scraper"]
