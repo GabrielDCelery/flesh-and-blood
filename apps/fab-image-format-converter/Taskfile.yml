@@ -3,3 +3,19 @@ tasks:
   build:
     cmds:
       - docker build . -t fab/image-format-converter:latest
+  convert:
+    vars:
+      SET_NAME: '{{.SET_NAME}}'
+    cmd: |
+      docker run --rm \
+      -v fab-cards:/source_images \
+      -v fab-cards-converted:/target_images \
+      -e SOURCE_DIR=/source_images/{{.SET_NAME}} \
+      -e TARGET_DIR=/target_images/{{.SET_NAME}} \
+      fab/image-format-converter:latest
+  convert-all:
+    cmds:
+      - task: convert
+        vars:
+          SET_NAME: welcome-to-rathe
+          PAGE_URL: https://fabtcg.com/en/resources/card-galleries/welcome-rathe-booster/
