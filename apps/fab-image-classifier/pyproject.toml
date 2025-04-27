@@ -1,0 +1,11 @@
+[project]
+name = "fab-image-classifier"
+version = "0.1.0"
+description = "Add your description here"
+authors = [{name = "GaborZeller", email = "gabriel.d.celery@gmail.com"}]
+packages = [{ include = "fab_image_classifier", from = "src" }]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "tensorflow>=2.19.0",
+]
