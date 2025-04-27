@@ -112,7 +112,7 @@ async def download_image(
         file_path = os.path.join(download_dir, file_name)
         is_file = os.path.isfile(file_path)
         if is_file:
-            logger.debug(
+            logger.info(
                 f"skipping downloading already existing file",
                 extra={"file_name": file_name, "file_path": file_path},
             )
@@ -125,7 +125,7 @@ async def download_image(
                 return
             with open(file_path, "wb") as f:
                 f.write(await response.read())
-                logger.debug(f"saved file", extra={"file_path": file_path})
+                logger.info(f"saved file", extra={"file_path": file_path})
             await asyncio.sleep(random.uniform(1, concurrency))
     except aiohttp.ClientError as e:
         logger.error(
