@@ -7,9 +7,9 @@ tasks:
   build:
     cmds:
       - task: image-scraper:build
-  run-scraper:
+  scrape:
     cmds:
-      - task: image-scraper:run
+      - task: image-scraper:scrape-all
   get-data-from-scraper:
     cmds:
       - mkdir -p fab-cards
