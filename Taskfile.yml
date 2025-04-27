@@ -3,13 +3,20 @@ includes:
   image-scraper:
     dir: ./apps/fab-image-scraper/
     taskfile: ./apps/fab-image-scraper/Taskfile.yml
+  image-converter:
+    dir: ./apps/fab-image-converter/
+    taskfile: ./apps/fab-image-converter/Taskfile.yml
 tasks:
   build:
     cmds:
       - task: image-scraper:build
+      - task: image-converter:build
   scrape:
     cmds:
       - task: image-scraper:scrape-all
+  convert:
+    cmds:
+      - task: image-converter:convert-all
   get-data-from-scraper:
     cmds:
       - mkdir -p fab-cards

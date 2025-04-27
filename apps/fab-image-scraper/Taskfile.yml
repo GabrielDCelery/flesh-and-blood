@@ -8,7 +8,7 @@ tasks:
       LOG_LEVEL: '{{.LOG_LEVEL | default "info"}}'
     vars:
       DOWNLOAD_CONCURRENCY: '{{.DOWNLOAD_CONCURRENCY | default "3"}}'
-      DOCKER_VOLUME_NAME: '{{.DOCKER_VOLUME_NAME | default "fab-cards"}}'
+      DOCKER_VOLUME_NAME: '{{.DOCKER_VOLUME_NAME | default "fab-cards-scraped"}}'
       PAGE_URL: '{{.PAGE_URL}}'
       SET_NAME: '{{.SET_NAME}}'
     cmd: |
