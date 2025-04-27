@@ -7,5 +7,7 @@ packages = [{ include = "fab_image_classifier", from = "src" }]
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "tensorflow>=2.19.0",
+    "torch (>=2.7.0,<3.0.0)",
+    "scikit-learn (>=1.6.1,<2.0.0)",
+    "torchvision (>=0.22.0,<0.23.0)"
 ]

@@ -1,1 +1,4 @@
 .env
+fab-cards
+fab-cards-png
+./apps/fab-image-classifier/

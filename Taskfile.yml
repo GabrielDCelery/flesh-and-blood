@@ -10,3 +10,9 @@ tasks:
   run-scraper:
     cmds:
       - task: image-scraper:run
+  get-data-from-scraper:
+    cmds:
+      - mkdir -p fab-cards
+      - docker run --rm -v fab-cards:/from -v $(pwd)/fab-cards:/to alpine sh -c "cp -a /from/. /to/"
+      - sudo chown -R $USER:$USER $(pwd)/fab-cards
+      - sudo chmod -R u+rw $(pwd)/fab-cards
