@@ -2,6 +2,7 @@ import logging
 import os
 
 import cv2
+from pythonjsonlogger.json import JsonFormatter
 
 from fab_image_segmentation.card_config import (
     CardConfig,
@@ -16,14 +17,26 @@ def run():
     log_level = os.environ["LOG_LEVEL"]
     src_dir = os.environ["SRC_DIR"]
     target_dir = os.environ["TARGET_DIR"]
-    logger.setLevel(log_level.upper())
+
+    init_logging(log_level)
     segment_cards(src_dir, target_dir)
+
+
+def init_logging(log_level: str):
+    handler = logging.StreamHandler()
+    formatter = JsonFormatter(
+        "%(asctime)s %(levelname)s %(name)s %(message)s",
+        rename_fields={"levelname": "level", "asctime": "timestamp"},
+    )
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+    logger.setLevel(log_level.upper())
 
 
 def segment_cards(src_dir: str, target_dir: str):
     file_paths = get_file_paths(src_dir)
     for file_path in file_paths:
-        logger.info(f"segmenting card {file_path}")
+        logger.info("segmenting card", extra={"file_path": file_path})
         segment_card(fab_card_config, file_path, target_dir)
 
 
@@ -53,7 +66,7 @@ def segment_card(card_config: CardConfig, src_img: str, target_dir: str):
         target_filename = f"{file_base_name}__{region_config['name']}__w{segment_width}__h{segment_height}.{file_extension}"
         # target_img_path = os.path.join(target_dir, output_filename)
         # print(target_img_path)
-        logger.info(f"saving image {target_filename}")
+        logger.info("saving image", extra={"target_filename": target_filename})
         cv2.imwrite(target_filename, enhanced)
 
 
