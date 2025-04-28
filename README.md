@@ -11,9 +11,6 @@ This is the start of a passion project to implement a fuzzy card finder for the 
 2. Run
 
 ```sh
-chmod +x ./apps/fab-image-scraper/scripts/*
-```
+task run
 
-```sh
-task --list-all
 ```
