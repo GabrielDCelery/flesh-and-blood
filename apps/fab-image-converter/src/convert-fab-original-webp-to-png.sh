@@ -22,6 +22,10 @@ for source_file in $SOURCE_DIR/*.webp; do
         source_file_name=$(basename $source_file)
         card_id=$(echo $source_file_name | cut -d'.' -f1)
         target_path="$(path_join "$TARGET_DIR" "$card_id").png"
+        if [ -f "$target_path" ]; then
+            echo "skipping source $source_file because target $target_path already exits"
+            continue
+        fi
         echo "converting source $source_file to $target_path"
         dwebp "$source_file" -o "$target_path"
         chmod 777 "$target_path"
