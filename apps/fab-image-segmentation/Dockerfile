@@ -10,16 +10,14 @@ WORKDIR /app
 
 COPY pyproject.toml poetry.lock ./
 COPY README.md ./
+
+RUN poetry install --only main --no-interaction --no-ansi --no-root
+
 COPY src ./src
-
-RUN poetry install --only main --no-interaction --no-ansi
-
 
 # Final stage
 #
 FROM python:3.12-slim-bullseye as runner
-
-RUN mkdir /downloads
 
 WORKDIR /app
 
