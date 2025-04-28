@@ -22,3 +22,21 @@ tasks:
       - task: segment
         vars:
           SET_NAME: welcome-to-rathe
+      - task: segment
+        vars:
+          SET_NAME: welcome-to-rathe-unlimited
+      - task: segment
+        vars:
+          SET_NAME: arcane-rising
+      - task: segment
+        vars:
+          SET_NAME: arcane-rising-unlimited
+      - task: segment
+        vars:
+          SET_NAME: crucible-of-war
+      - task: segment
+        vars:
+          SET_NAME: monarch
+      - task: segment
+        vars:
+          SET_NAME: monarch-unlimited
