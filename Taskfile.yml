@@ -10,6 +10,11 @@ includes:
     dir: ./apps/fab-image-segmentation/
     taskfile: ./apps/fab-image-segmentation/Taskfile.yml
 tasks:
+  bootstrap:
+    cmds:
+      - docker volume create fab-cards-scraped
+      - docker volume create fab-cards-converted
+      - docker volume create fab-cards-segmented
   build:
     cmds:
       - task: image-scraper:build
@@ -21,9 +26,16 @@ tasks:
     cmd: task image-converter:convert-all
   segment:
     cmd: task image-segmentation:segment-all
-  get-data-from-scraper:
+  run:
     cmds:
-      - mkdir -p fab-cards
-      - docker run --rm -v fab-cards:/from -v $(pwd)/fab-cards:/to alpine sh -c "cp -a /from/. /to/"
-      - sudo chown -R $USER:$USER $(pwd)/fab-cards
-      - sudo chmod -R u+rw $(pwd)/fab-cards
+      - task bootstrap
+      - task build
+      - task scrape
+      - task convert
+      - task segment
+  # get-data-from-scraper:
+  #   cmds:
+  #     - mkdir -p fab-cards
+  #     - docker run --rm -v fab-cards:/from -v $(pwd)/fab-cards:/to alpine sh -c "cp -a /from/. /to/"
+  #     - sudo chown -R $USER:$USER $(pwd)/fab-cards
+  #     - sudo chmod -R u+rw $(pwd)/fab-cards
