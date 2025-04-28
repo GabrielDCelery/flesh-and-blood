@@ -27,3 +27,12 @@ tasks:
       - task: convert
         vars:
           SET_NAME: arcane-rising-unlimited
+      - task: convert
+        vars:
+          SET_NAME: crucible-of-war
+      - task: convert
+        vars:
+          SET_NAME: monarch
+      - task: convert
+        vars:
+          SET_NAME: monarch-unlimited

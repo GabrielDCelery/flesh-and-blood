@@ -37,3 +37,15 @@ tasks:
         vars:
           SET_NAME: arcane-rising-unlimited
           PAGE_URL: https://fabtcg.com/en/resources/card-galleries/arcane-rising-unlimited-booster/
+      - task: scrape
+        vars:
+          SET_NAME: crucible-of-war
+          PAGE_URL: https://fabtcg.com/en/resources/card-galleries/crucible-war-booster/
+      - task: scrape
+        vars:
+          SET_NAME: monarch
+          PAGE_URL: https://fabtcg.com/en/resources/card-galleries/monarch-booster/
+      - task: scrape
+        vars:
+          SET_NAME: monarch-unlimited
+          PAGE_URL: https://fabtcg.com/en/resources/card-galleries/monarch-booster-unlimited/
