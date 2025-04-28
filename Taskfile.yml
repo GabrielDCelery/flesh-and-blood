@@ -6,15 +6,21 @@ includes:
   image-converter:
     dir: ./apps/fab-image-converter/
     taskfile: ./apps/fab-image-converter/Taskfile.yml
+  image-segmentation:
+    dir: ./apps/fab-image-segmentation/
+    taskfile: ./apps/fab-image-segmentation/Taskfile.yml
 tasks:
   build:
     cmds:
       - task: image-scraper:build
       - task: image-converter:build
+      - task: image-segmentation:build
   scrape:
     cmd: task image-scraper:scrape-all
   convert:
     cmd: task image-converter:convert-all
+  segment:
+    cmd: task image-segmentation:segment-all
   get-data-from-scraper:
     cmds:
       - mkdir -p fab-cards
