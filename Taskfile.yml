@@ -12,11 +12,9 @@ tasks:
       - task: image-scraper:build
       - task: image-converter:build
   scrape:
-    cmds:
-      - task: image-scraper:scrape-all
+    cmd: task image-scraper:scrape-all
   convert:
-    cmds:
-      - task: image-converter:convert-all
+    cmd: task image-converter:convert-all
   get-data-from-scraper:
     cmds:
       - mkdir -p fab-cards
