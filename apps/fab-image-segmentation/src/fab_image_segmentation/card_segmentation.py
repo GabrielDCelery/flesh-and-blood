@@ -69,13 +69,13 @@ def segment_card(card_config: CardConfig, src_img: str, target_dir: str):
                 extra={"target_filename": target_filename},
             )
             continue
-        gray = cv2.cvtColor(image_segment, cv2.COLOR_BGR2GRAY)
-        clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
-        enhanced = clahe.apply(gray)
+        # gray = cv2.cvtColor(image_segment, cv2.COLOR_BGR2GRAY)
+        # clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
+        # enhanced = clahe.apply(gray)
         # target_img_path = os.path.join(target_dir, output_filename)
         # print(target_img_path)
         logger.info("saving image", extra={"target_filename": target_filename})
-        cv2.imwrite(target_filename, enhanced)
+        cv2.imwrite(target_filename, image_segment)
 
 
 def get_bounding_box_abs_positions(
