@@ -4,13 +4,15 @@ This is the start of a passion project to implement a fuzzy card finder for the 
 
 ## Dependencies
 
-1. Install
+Make sure the following are installed:
 
+[Docker](https://www.docker.com)
 [Taskfile](https://taskfile.dev)
 
-2. Run
+## Quickstart
+
+Run the below command to run all the apps (scraper, converter etc...) sequentially.
 
 ```sh
 task run
-
 ```
