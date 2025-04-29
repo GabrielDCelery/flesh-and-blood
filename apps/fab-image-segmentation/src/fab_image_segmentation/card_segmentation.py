@@ -60,7 +60,8 @@ def segment_card(card_config: CardConfig, src_img: str, target_dir: str):
         (x1, y1, x2, y2) = get_bounding_box_abs_positions(region_config, image)
         image_segment = image[y1:y2, x1:x2]
         segment_height, segment_width = image_segment.shape[0:2]
-        target_filename = f"{file_base_name}__{region_config['name']}__w{segment_width}__h{segment_height}.{file_extension}"
+        # target_filename = f"{file_base_name}__{region_config['name']}__w{segment_width}__h{segment_height}.{file_extension}"
+        target_filename = f"{file_base_name}__{region_config['name']}.{file_extension}"
         target_img_path = os.path.join(target_dir, target_filename)
         if os.path.exists(target_img_path):
             logger.info(
