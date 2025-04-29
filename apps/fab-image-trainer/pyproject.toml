@@ -1,0 +1,18 @@
+[project]
+name = "fab-image-trainer"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "GaborZeller",email = "gabriel.d.celery@gmail.com"}
+]
+packages = [{ include = "fab_image_trainer", from = "src" }]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "easyocr (>=1.7.2,<2.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
