@@ -6,8 +6,8 @@ This is the start of a passion project to implement a fuzzy card finder for the 
 
 Make sure the following are installed:
 
-[Docker](https://www.docker.com)
-[Taskfile](https://taskfile.dev)
+- [Docker](https://www.docker.com)
+- [Taskfile](https://taskfile.dev)
 
 ## Quickstart
 
