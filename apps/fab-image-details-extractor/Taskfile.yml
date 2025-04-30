@@ -1,0 +1,4 @@
+version: '3'
+tasks:
+  build:
+    cmd: docker build . -t fab/image-details-extractor:latest
