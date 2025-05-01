@@ -115,7 +115,7 @@ class CardClassifier:
                 Returns the number of red dots found.
                 """
                 # Convert to HSV color space for better color detection
-                hsv = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)
+                hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
                 # Define range for red color in HSV
                 # Red wraps around in HSV, so we need two ranges
