@@ -9,9 +9,9 @@ tasks:
     cmd: |
       docker run --rm \
       -v fab-cards-scraped:/source_images \
-      -v fab-cards-converted:/target_images \
+      -v fab-cards-prepared:/target_images \
       -e SOURCE_DIR=/source_images/{{.SET_NAME}} \
-      -e TARGET_DIR=/target_images/{{.SET_NAME}} \
+      -e TARGET_DIR=/target_images \
       fab/image-converter:latest
   convert-all:
     cmds:
