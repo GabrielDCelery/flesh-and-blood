@@ -1,4 +1,4 @@
-from fab_image_details_extractor.types import (
+from fab_extract.types import (
     CardConfig,
     CardSegmentConfig,
     CardSegmentType,

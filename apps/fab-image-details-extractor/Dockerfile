@@ -27,4 +27,5 @@ COPY --from=builder /app/src /app/src
 ENV PATH=/app/.venv/bin:$PATH
 ENV PYTHONPATH=/app/src:$PATH
 
-CMD ["/app/.venv/bin/python", "-m", "fab_image_details_extractor"]
+ENTRYPOINT [ "/app/.venv/bin/python", "-m" ]
+CMD ["fab_extract"]
