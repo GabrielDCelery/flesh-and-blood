@@ -8,17 +8,17 @@ tasks:
       LANGUAGE_MODEL_URL: https://github.com/JaidedAI/EasyOCR/releases/download/v1.3/english_g2.zip
       TEXT_DETECTION_MODEL_URL: https://github.com/JaidedAI/EasyOCR/releases/download/pre-v1.1.6/craft_mlt_25k.zip
     cmds:
-      - docker volume create fab-models
+      - docker volume create fab-cards-models
       - |
         docker run --rm \
-        -v fab-models:{{$.MODELS_DIR}} \
+        -v fab-cards-models:{{$.MODELS_DIR}} \
         -e LANGUAGE_MODEL_URL={{$.LANGUAGE_MODEL_URL}} \
         -e TEXT_DETECTION_MODEL_URL={{$.TEXT_DETECTION_MODEL_URL}} \
         -e MODELS_DIR={{$.MODELS_DIR}} \
         fab/image-details-extractor:latest fab_bootstrap
   extract:
     vars:
-      FAB_CARDS_VOLUME: fab-cards
+      FAB_CARDS_VOLUME: fab-cards-prepared
       MODELS_DIR: /models
       IMG_SRC_DIR: /img_src
     cmds:
@@ -27,4 +27,5 @@ tasks:
         -v fab-models:{{$.MODELS_DIR}} \
         -v {{$.FAB_CARDS_VOLUME}}:{{$.IMG_SRC_DIR}} \
         -e IMG_SRC_DIR={{$.IMG_SRC_DIR}} \
+        -e MODELS_DIR={{$.MODELS_DIR}}/model \
         fab/image-details-extractor:latest fab_extract
