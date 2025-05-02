@@ -3,9 +3,6 @@ includes:
   fab-scraper:
     dir: ./apps/fab-scraper/
     taskfile: ./apps/fab-scraper/Taskfile.yml
-  image-converter:
-    dir: ./apps/fab-image-converter/
-    taskfile: ./apps/fab-image-converter/Taskfile.yml
   image-text-extractor:
     dir: ./apps/fab-image-details-extractor/
     taskfile: ./apps/fab-image-details-extractor/Taskfile.yml
@@ -13,7 +10,6 @@ tasks:
   build:
     cmds:
       - task: fab-scraper:build
-      - task: image-converter:build
       - task: image-text-extractor:build
   bootstrap:
     cmds:
@@ -23,8 +19,8 @@ tasks:
       - task image-text-extractor:bootstrap
   scrape:
     cmd: task fab-scraper:scrape-all
-  convert:
-    cmd: task image-converter:convert-all
+  prepare:
+    cmd: task fab-scraper:prepare-all
   extract:
     cmd: task image-text-extractor:extract
   run:
@@ -32,7 +28,7 @@ tasks:
       - task build
       - task bootstrap
       - task scrape
-      - task convert
+      - task prepare
       - task extract
   # get-data-from-scraper:
   #   cmds:
