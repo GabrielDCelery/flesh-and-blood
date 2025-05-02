@@ -1,8 +1,8 @@
 version: '3'
 includes:
-  image-scraper:
-    dir: ./apps/fab-image-scraper/
-    taskfile: ./apps/fab-image-scraper/Taskfile.yml
+  fab-scraper:
+    dir: ./apps/fab-scraper/
+    taskfile: ./apps/fab-scraper/Taskfile.yml
   image-converter:
     dir: ./apps/fab-image-converter/
     taskfile: ./apps/fab-image-converter/Taskfile.yml
@@ -12,7 +12,7 @@ includes:
 tasks:
   build:
     cmds:
-      - task: image-scraper:build
+      - task: fab-scraper:build
       - task: image-converter:build
       - task: image-text-extractor:build
   bootstrap:
@@ -22,7 +22,7 @@ tasks:
       - docker volume create fab-cards-models
       - task image-text-extractor:bootstrap
   scrape:
-    cmd: task image-scraper:scrape-all
+    cmd: task fab-scraper:scrape-all
   convert:
     cmd: task image-converter:convert-all
   extract:
