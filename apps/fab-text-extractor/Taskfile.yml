@@ -1,7 +1,9 @@
 version: '3'
+vars:
+  DOCKER_IMAGE_NAME: fab/text-extractor:1.0.0
 tasks:
   build:
-    cmd: docker build . -t fab/text-extractor:latest
+    cmd: docker build . -t {{.DOCKER_IMAGE_NAME}}
   bootstrap:
     vars:
       MODELS_DIR: /models
@@ -15,7 +17,7 @@ tasks:
         -e LANGUAGE_MODEL_URL={{$.LANGUAGE_MODEL_URL}} \
         -e TEXT_DETECTION_MODEL_URL={{$.TEXT_DETECTION_MODEL_URL}} \
         -e MODELS_DIR={{$.MODELS_DIR}} \
-        fab/text-extractor:latest fab_bootstrap
+        {{.DOCKER_IMAGE_NAME}} fab_bootstrap
   extract:
     env:
       LOG_LEVEL: '{{.LOG_LEVEL | default "info"}}'
@@ -32,7 +34,7 @@ tasks:
         -e LOG_LEVEL=${LOG_LEVEL} \
         -e IMG_SRC_DIR={{$.IMG_SRC_DIR}}/{{.SET_NAME}} \
         -e MODELS_DIR={{$.MODELS_DIR}}/model \
-        fab/text-extractor:latest fab_extract
+        {{.DOCKER_IMAGE_NAME}} fab_extract
   extract-all:
     cmds:
       - task: extract
