@@ -63,6 +63,10 @@ tasks:
           PAGE_URL: https://fabtcg.com/en/resources/card-galleries/crucible-war-booster/
       - task: scrape
         vars:
+          SET_NAME: crucible-of-war-unlimited
+          PAGE_URL: https://fabtcg.com/en/resources/card-galleries/crucible-war-unlimited/
+      - task: scrape
+        vars:
           SET_NAME: monarch
           PAGE_URL: https://fabtcg.com/en/resources/card-galleries/monarch-booster/
       - task: scrape
@@ -74,3 +78,24 @@ tasks:
       - task: prepare
         vars:
           SET_NAME: welcome-to-rathe
+      - task: prepare
+        vars:
+          SET_NAME: welcome-to-rathe-unlimited
+      - task: prepare
+        vars:
+          SET_NAME: arcane-rising
+      - task: prepare
+        vars:
+          SET_NAME: arcane-rising-unlimited
+      - task: prepare
+        vars:
+          SET_NAME: crucible-of-war
+      - task: prepare
+        vars:
+          SET_NAME: crucible-of-war-unlimited
+      - task: prepare
+        vars:
+          SET_NAME: monarch
+      - task: prepare
+        vars:
+          SET_NAME: monarch-unlimited
