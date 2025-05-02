@@ -1,6 +1,6 @@
 version: '3'
 vars:
-  DOCKER_IMAGE_NAME: fab/scraper:1.0.0
+  DOCKER_IMAGE_NAME: fab/scraper:1.1.0
 tasks:
   build:
     cmd: docker build . -t {{.DOCKER_IMAGE_NAME}}
@@ -20,7 +20,25 @@ tasks:
       -e DOWNLOAD_DIR=/downloads/{{.SET_NAME}} \
       -e DOWNLOAD_CONCURRENCY={{.DOWNLOAD_CONCURRENCY}} \
       -v {{.DOCKER_VOLUME_NAME}}:/downloads \
-      {{.DOCKER_IMAGE_NAME}}
+      {{.DOCKER_IMAGE_NAME}} fab_scraper
+  prepare:
+    desc: Prepare scraped images
+    env:
+      LOG_LEVEL: '{{.LOG_LEVEL | default "info"}}'
+    vars:
+      SRC_DOCKER_VOLUME_NAME: '{{.SRC_DOCKER_VOLUME_NAME | default "fab-cards-scraped"}}'
+      TARGET_DOCKER_VOLUME_NAME: '{{.TARGET_DOCKER_VOLUME_NAME | default "fab-cards-prepared"}}'
+      SRC_VOUME_MOUNT_DIR: /src-dir
+      TARGET_VOLUME_MOUNT_DIR: /tartget-dir
+      SET_NAME: '{{.SET_NAME}}'
+    cmd: |
+      docker run --rm \
+      -v {{.SRC_DOCKER_VOLUME_NAME}}:{{.SRC_VOUME_MOUNT_DIR}} \
+      -v {{.TARGET_DOCKER_VOLUME_NAME}}:{{.TARGET_VOLUME_MOUNT_DIR}} \
+      -e LOG_LEVEL=${LOG_LEVEL} \
+      -e SRC_DIR={{.SRC_VOUME_MOUNT_DIR}}/{{.SET_NAME}} \
+      -e TARGET_DIR={{.TARGET_VOLUME_MOUNT_DIR}}/{{.SET_NAME}} \
+      {{.DOCKER_IMAGE_NAME}} fab_preparator
   scrape-all:
     cmds:
       - task: scrape
@@ -51,3 +69,8 @@ tasks:
         vars:
           SET_NAME: monarch-unlimited
           PAGE_URL: https://fabtcg.com/en/resources/card-galleries/monarch-booster-unlimited/
+  prepare-all:
+    cmds:
+      - task: prepare
+        vars:
+          SET_NAME: welcome-to-rathe

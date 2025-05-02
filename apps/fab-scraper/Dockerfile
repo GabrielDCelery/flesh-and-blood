@@ -1,5 +1,8 @@
 FROM python:3.12-slim-bullseye as builder
 
+RUN apt update && \
+    apt install -y libwebp-dev
+
 RUN pip install poetry
 
 ENV POETRY_VIRTUALENVS_CREATE=true \
@@ -10,9 +13,10 @@ WORKDIR /app
 
 COPY pyproject.toml poetry.lock ./
 COPY README.md ./
-COPY src ./src
 
-RUN poetry install --only main --no-interaction --no-ansi
+RUN poetry install --only main --no-interaction --no-ansi --no-root
+
+COPY src ./src
 
 # Final stage
 #
