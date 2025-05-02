@@ -1,11 +1,11 @@
 [project]
-name = "fab-image-details-extractor"
+name = "fab-text-extractor"
 version = "0.1.0"
 description = ""
 authors = [
     {name = "GaborZeller",email = "gabriel.d.celery@gmail.com"}
 ]
-packages = [{ include = "fab_image_details_extractor", from = "src" }]
+packages = [{ include = "fab_text_extractor", from = "src" }]
 
 readme = "README.md"
 requires-python = ">=3.12"

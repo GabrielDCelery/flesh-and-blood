@@ -21,11 +21,17 @@ tasks:
       FAB_CARDS_VOLUME: fab-cards-prepared
       MODELS_DIR: /models
       IMG_SRC_DIR: /img_src
+      SET_NAME: '{{.SET_NAME}}'
     cmds:
       - |
         docker run --rm \
-        -v fab-models:{{$.MODELS_DIR}} \
+        -v fab-cards-models:{{$.MODELS_DIR}} \
         -v {{$.FAB_CARDS_VOLUME}}:{{$.IMG_SRC_DIR}} \
-        -e IMG_SRC_DIR={{$.IMG_SRC_DIR}} \
+        -e IMG_SRC_DIR={{$.IMG_SRC_DIR}}/{{.SET_NAME}} \
         -e MODELS_DIR={{$.MODELS_DIR}}/model \
         fab/image-details-extractor:latest fab_extract
+  extract-all:
+    cmds:
+      - task: extract
+        vars:
+          SET_NAME: welcome-to-rathe

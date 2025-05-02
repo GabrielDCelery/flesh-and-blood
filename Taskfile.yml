@@ -3,26 +3,26 @@ includes:
   fab-scraper:
     dir: ./apps/fab-scraper/
     taskfile: ./apps/fab-scraper/Taskfile.yml
-  image-text-extractor:
-    dir: ./apps/fab-image-details-extractor/
-    taskfile: ./apps/fab-image-details-extractor/Taskfile.yml
+  fab-text-extractor:
+    dir: ./apps/fab-text-extractor/
+    taskfile: ./apps/fab-text-extractor/Taskfile.yml
 tasks:
   build:
     cmds:
       - task: fab-scraper:build
-      - task: image-text-extractor:build
+      - task: fab-text-extractor:build
   bootstrap:
     cmds:
       - docker volume create fab-cards-scraped
       - docker volume create fab-cards-prepared
       - docker volume create fab-cards-models
-      - task image-text-extractor:bootstrap
+      - task fab-text-extractor:bootstrap
   scrape:
     cmd: task fab-scraper:scrape-all
   prepare:
     cmd: task fab-scraper:prepare-all
   extract:
-    cmd: task image-text-extractor:extract
+    cmd: task fab-text-extractor:extract-all
   run:
     cmds:
       - task build
