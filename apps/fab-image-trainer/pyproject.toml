@@ -7,9 +7,10 @@ authors = [
 ]
 packages = [{ include = "fab_image_trainer", from = "src" }]
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.11"
 dependencies = [
-    "easyocr (>=1.7.2,<2.0.0)"
+    # "easyocr (>=1.7.2,<2.0.0)"
+    "torch (>=2.7.0,<3.0.0)"
 ]
 
 

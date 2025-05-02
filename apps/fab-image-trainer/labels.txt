@@ -1,0 +1,8 @@
+train/WTR_4__title.png\tScabskin Leathers
+train/WTR_39__title.png\tBravo
+train/WTR_61__title.png\tCartilage Crush
+train/WTR_64__title.png\tCrush Confidence
+train/WTR_75__title.png\tSeismic Surge
+val/WTR_55__title.png\tBlessing of Deliverance
+val/WTR_135__title.png\tBiting Blade
+val/WTR_101__title.png\tLeg Trap
