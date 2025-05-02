@@ -1,6 +1,6 @@
 version: '3'
 vars:
-  DOCKER_IMAGE_NAME: fab/scraper:1.1.0
+  DOCKER_IMAGE_NAME: fab/scraper:1.2.0
 tasks:
   build:
     cmd: docker build . -t {{.DOCKER_IMAGE_NAME}}

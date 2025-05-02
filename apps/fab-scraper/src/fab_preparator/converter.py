@@ -16,6 +16,9 @@ def convert_images_to_png(src_dir: str, target_dir: str) -> None:
         file_base = file_name.split(".")[0]
         new_file_name = f"{file_base}.png"
         target_path = os.path.join(target_dir, new_file_name)
+        if os.path.exists(target_path):
+            logger.info(f"image already exists", extra={"target_path": target_path})
+            continue
         try:
             with Image.open(abs_img_path) as img:
                 if img.mode == "RGBA":
