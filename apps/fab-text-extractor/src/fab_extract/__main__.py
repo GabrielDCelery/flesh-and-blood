@@ -3,17 +3,24 @@ import json
 import os
 
 from fab_extract.card_classifier import CardClassifier
+from fab_extract.logs import get_logger, init_logging
 
 
 def main():
+    log_level = os.environ["LOG_LEVEL"]
     img_src_dir = os.environ["IMG_SRC_DIR"]
     models_dir = os.environ["MODELS_DIR"]
+    init_logging(log_level)
+    logger = get_logger()
     src_images = glob.glob(os.path.join(img_src_dir, "*.png"))
     extractor = CardClassifier(models_dir)
     for src_img in src_images:
-        file_name = os.path.basename(src_img)
+        # file_name = os.path.basename(src_img)
         card_info = extractor.extract_details(src_img)
-        print(json.dumps(card_info))
+        logger.info(
+            f"finished extracting data from image",
+            extra={"src_img": src_img, "data": json.dumps(card_info)},
+        )
 
 
 if __name__ == "__main__":

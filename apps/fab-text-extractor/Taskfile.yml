@@ -1,7 +1,7 @@
 version: '3'
 tasks:
   build:
-    cmd: docker build . -t fab/image-details-extractor:latest
+    cmd: docker build . -t fab/text-extractor:latest
   bootstrap:
     vars:
       MODELS_DIR: /models
@@ -15,8 +15,10 @@ tasks:
         -e LANGUAGE_MODEL_URL={{$.LANGUAGE_MODEL_URL}} \
         -e TEXT_DETECTION_MODEL_URL={{$.TEXT_DETECTION_MODEL_URL}} \
         -e MODELS_DIR={{$.MODELS_DIR}} \
-        fab/image-details-extractor:latest fab_bootstrap
+        fab/text-extractor:latest fab_bootstrap
   extract:
+    env:
+      LOG_LEVEL: '{{.LOG_LEVEL | default "info"}}'
     vars:
       FAB_CARDS_VOLUME: fab-cards-prepared
       MODELS_DIR: /models
@@ -27,9 +29,10 @@ tasks:
         docker run --rm \
         -v fab-cards-models:{{$.MODELS_DIR}} \
         -v {{$.FAB_CARDS_VOLUME}}:{{$.IMG_SRC_DIR}} \
+        -e LOG_LEVEL=${LOG_LEVEL} \
         -e IMG_SRC_DIR={{$.IMG_SRC_DIR}}/{{.SET_NAME}} \
         -e MODELS_DIR={{$.MODELS_DIR}}/model \
-        fab/image-details-extractor:latest fab_extract
+        fab/text-extractor:latest fab_extract
   extract-all:
     cmds:
       - task: extract
