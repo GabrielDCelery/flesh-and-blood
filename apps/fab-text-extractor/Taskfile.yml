@@ -1,12 +1,15 @@
 version: '3'
 vars:
-  DOCKER_IMAGE_NAME: fab/text-extractor:1.1.0
+  DOCKER_IMAGE_NAME: fab/text-extractor:1.2.0
 tasks:
   build:
     cmd: docker build . -t {{.DOCKER_IMAGE_NAME}}
   bootstrap:
+    env:
+      LOG_LEVEL: '{{.LOG_LEVEL | default "info"}}'
     vars:
       MODELS_DIR: /models
+      MODEL_NAME: v1.3-default
       LANGUAGE_MODEL_URL: https://github.com/JaidedAI/EasyOCR/releases/download/v1.3/english_g2.zip
       TEXT_DETECTION_MODEL_URL: https://github.com/JaidedAI/EasyOCR/releases/download/pre-v1.1.6/craft_mlt_25k.zip
     cmds:
@@ -14,9 +17,11 @@ tasks:
       - |
         docker run --rm \
         -v fab-cards-models:{{$.MODELS_DIR}} \
+        -e LOG_LEVEL=${LOG_LEVEL} \
         -e LANGUAGE_MODEL_URL={{$.LANGUAGE_MODEL_URL}} \
         -e TEXT_DETECTION_MODEL_URL={{$.TEXT_DETECTION_MODEL_URL}} \
         -e MODELS_DIR={{$.MODELS_DIR}} \
+        -e MODEL_NAME={{$.MODEL_NAME}} \
         {{.DOCKER_IMAGE_NAME}} fab_bootstrap
   extract:
     env:
