@@ -10,32 +10,32 @@ class BoundingBox(TypedDict):
 
 
 class TextExtractor(IntEnum):
-    INTEGER = 1
-    TITLE = 2
-    LONG_TITLE = 3
-    TEXTBOX = 4
-    PITCH = 5
+    INTEGER = 0
+    TITLE = 1
+    LONG_TITLE = 2
+    TEXTBOX = 3
+    PITCH = 4
 
 
 class CardType(IntEnum):
-    HERO = 1
-    EQUIPMENT = 2
-    WEAPON = 3
-    ACTION = 4
-    ATTACK_REACTION = 5
-    DEFENSE_REACTION = 6
-    INSTANT = 7
+    HERO = 0
+    EQUIPMENT = 1
+    WEAPON = 2
+    ACTION = 3
+    ATTACK_REACTION = 4
+    DEFENSE_REACTION = 5
+    INSTANT = 6
 
 
 class CardSegmentType(IntEnum):
-    TYPE = 1
-    TITLE = 2
-    LONG_TITLE = 3
-    PITCH = 4
-    COST = 5
-    ATTACK = 6
-    DEFENSE = 7
-    TEXTBOX = 8
+    TYPE = 0
+    TITLE = 1
+    LONG_TITLE = 2
+    PITCH = 3
+    COST = 4
+    ATTACK = 5
+    DEFENSE = 6
+    TEXTBOX = 7
 
 
 class CardSegmentConfig(TypedDict):
