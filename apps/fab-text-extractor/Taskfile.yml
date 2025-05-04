@@ -31,6 +31,8 @@ tasks:
     env:
       LOG_LEVEL: '{{.LOG_LEVEL | default "info"}}'
     vars:
+      DB_MOUNT_POINT: /text-extracts-db
+      DB_NAME: text-extracts.sqlite
       FAB_CARDS_VOLUME: fab-cards-prepared
       MODELS_DIR: /models
       MODEL_NAME: v1.3-default
@@ -40,10 +42,12 @@ tasks:
       - |
         docker run --rm \
         -v fab-cards-models:{{$.MODELS_DIR}} \
+        -v fab-cards-text-extracts-db:{{$.DB_MOUNT_POINT}} \
         -v {{$.FAB_CARDS_VOLUME}}:{{$.IMG_SRC_DIR}} \
         -e LOG_LEVEL=${LOG_LEVEL} \
         -e IMG_SRC_DIR={{$.IMG_SRC_DIR}}/{{.SET_NAME}} \
         -e MODELS_DIR={{$.MODELS_DIR}}/{{$.MODEL_NAME}} \
+        -e DB_PATH={{$.DB_MOUNT_POINT}}/{{$.DB_NAME}} \
         {{.DOCKER_IMAGE_NAME}} fab_extract
   extract-all:
     cmds:

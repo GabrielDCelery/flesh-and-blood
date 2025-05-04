@@ -2,8 +2,8 @@ import os
 import zipfile
 from urllib.request import urlretrieve
 
+from common import TextExtractsSQLiteStorage
 from fab_bootstrap.logs import init_logger
-from fab_bootstrap.store import create_db
 
 
 def main():
@@ -18,7 +18,9 @@ def main():
 
     logger.info(f"create text extractor database", extra={"db_path": db_path})
 
-    create_db(db_path)
+    storage = TextExtractsSQLiteStorage(db_path)
+
+    storage.create_db()
 
     target_dir_path = os.path.join(models_dir, model_name)
 

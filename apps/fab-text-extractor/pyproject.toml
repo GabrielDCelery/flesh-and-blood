@@ -6,6 +6,7 @@ authors = [
     {name = "GaborZeller",email = "gabriel.d.celery@gmail.com"}
 ]
 packages = [
+    { include = "common", from = "src" },
     { include = "fab_extract", from = "src" },
     { include = "fab_bootstrap", from = "src" }
 ]
