@@ -38,7 +38,7 @@ tasks:
         -v {{$.FAB_CARDS_VOLUME}}:{{$.IMG_SRC_DIR}} \
         -e LOG_LEVEL=${LOG_LEVEL} \
         -e IMG_SRC_DIR={{$.IMG_SRC_DIR}}/{{.SET_NAME}} \
-        -e MODELS_DIR={{$.MODELS_DIR}}/model \
+        -e MODELS_DIR={{$.MODELS_DIR}}/{{$.MODEL_NAME}} \
         {{.DOCKER_IMAGE_NAME}} fab_extract
   extract-all:
     cmds:
