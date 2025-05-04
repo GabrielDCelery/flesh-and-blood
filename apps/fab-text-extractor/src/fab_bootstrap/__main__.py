@@ -2,7 +2,8 @@ import os
 import zipfile
 from urllib.request import urlretrieve
 
-from fab_extract.logs import init_logger
+from fab_bootstrap.logs import init_logger
+from fab_bootstrap.store import create_db
 
 
 def main():
@@ -11,8 +12,13 @@ def main():
     model_name = os.environ["MODEL_NAME"]
     language_model_url = os.environ["LANGUAGE_MODEL_URL"]
     text_detection_model_url = os.environ["TEXT_DETECTION_MODEL_URL"]
+    db_path = os.environ["DB_PATH"]
 
     logger = init_logger(log_level)
+
+    logger.info(f"create text extractor database", extra={"db_path": db_path})
+
+    create_db(db_path)
 
     target_dir_path = os.path.join(models_dir, model_name)
 

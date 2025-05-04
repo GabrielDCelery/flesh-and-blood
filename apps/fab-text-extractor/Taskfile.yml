@@ -8,6 +8,8 @@ tasks:
     env:
       LOG_LEVEL: '{{.LOG_LEVEL | default "info"}}'
     vars:
+      DB_MOUNT_POINT: /text-extracts-db
+      DB_NAME: text-extracts.sqlite
       MODELS_DIR: /models
       MODEL_NAME: v1.3-default
       LANGUAGE_MODEL_URL: https://github.com/JaidedAI/EasyOCR/releases/download/v1.3/english_g2.zip
@@ -17,11 +19,13 @@ tasks:
       - |
         docker run --rm \
         -v fab-cards-models:{{$.MODELS_DIR}} \
+        -v fab-cards-text-extracts-db:{{$.DB_MOUNT_POINT}} \
         -e LOG_LEVEL=${LOG_LEVEL} \
         -e LANGUAGE_MODEL_URL={{$.LANGUAGE_MODEL_URL}} \
         -e TEXT_DETECTION_MODEL_URL={{$.TEXT_DETECTION_MODEL_URL}} \
         -e MODELS_DIR={{$.MODELS_DIR}} \
         -e MODEL_NAME={{$.MODEL_NAME}} \
+        -e DB_PATH={{$.DB_MOUNT_POINT}}/{{$.DB_NAME}} \
         {{.DOCKER_IMAGE_NAME}} fab_bootstrap
   extract:
     env:

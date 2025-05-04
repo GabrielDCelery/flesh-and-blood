@@ -1,7 +1,7 @@
 import sqlite3
 
 
-def create_table(db_name: str):
+def create_db(db_name: str):
     with sqlite3.connect(db_name) as conn:
         cur = conn.cursor()
 

@@ -16,6 +16,7 @@ tasks:
       - docker volume create fab-cards-scraped
       - docker volume create fab-cards-prepared
       - docker volume create fab-cards-models
+      - docker volume create fab-cards-text-extracts-db
       - task fab-text-extractor:bootstrap
   scrape:
     cmd: task fab-scraper:scrape-all
