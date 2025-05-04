@@ -54,3 +54,24 @@ tasks:
       - task: extract
         vars:
           SET_NAME: welcome-to-rathe
+      - task: extract
+        vars:
+          SET_NAME: welcome-to-rathe-unlimited
+      - task: extract
+        vars:
+          SET_NAME: arcane-rising
+      - task: extract
+        vars:
+          SET_NAME: arcane-rising-unlimited
+      - task: extract
+        vars:
+          SET_NAME: crucible-of-war
+      - task: extract
+        vars:
+          SET_NAME: crucible-of-war-unlimited
+      - task: extract
+        vars:
+          SET_NAME: monarch
+      - task: extract
+        vars:
+          SET_NAME: monarch-unlimited
