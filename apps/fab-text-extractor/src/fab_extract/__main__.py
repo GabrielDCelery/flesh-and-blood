@@ -20,12 +20,7 @@ def main():
     src_images = glob.glob(os.path.join(img_src_dir, "*.png"))
 
     for src_img in src_images:
-        # file_name = os.path.basename(src_img)
-        card_info = extractor.extract_details(src_img)
-        logger.get().info(
-            f"finished extracting data from image",
-            extra={"src_img": src_img, "data": json.dumps(card_info)},
-        )
+        extractor.extract_details(src_img)
     store.close()
 
 

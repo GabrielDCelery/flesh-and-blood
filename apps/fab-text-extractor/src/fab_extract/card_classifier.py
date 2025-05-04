@@ -33,21 +33,30 @@ class CardClassifier:
         self.store = store
         self.logger = logger
 
-    def extract_details(self, card_path: str) -> CardDetails | None:
+    def extract_details(self, card_path: str) -> None:
         image = cv2.imread(card_path)
         card_config = self.classify(image)
         if card_config is None:
+            self.logger.get().warning(
+                f"could not identify card, skipping", extra={"card_path": card_path}
+            )
             return None
-        card_details: CardDetails = {
-            "card_type": card_config["card_type"],
-            "segments": [],
-        }
         img_name = os.path.basename(card_path)
         for segment in card_config["segments"]:
             extract_exists = self.store.does_extract_exist(
                 img_name, self.model_name, segment["card_segment_type"]
             )
             if extract_exists:
+                self.logger.get().info(
+                    f"card segment has already been processed, skipping",
+                    extra={
+                        "card_path": card_path,
+                        "img_name": img_name,
+                        "model_name": self.model_name,
+                        "card_type": card_config["card_type"],
+                        "segment_type": segment["card_segment_type"],
+                    },
+                )
                 continue
             card_segment_details = self.get_card_segment_details(segment, image)
             if card_segment_details is None:
@@ -59,9 +68,18 @@ class CardClassifier:
                 segment_type=segment["card_segment_type"],
                 text=card_segment_details["text"],
             )
+            self.logger.get().info(
+                f"stored card segment",
+                extra={
+                    "card_path": card_path,
+                    "img_name": img_name,
+                    "model_name": self.model_name,
+                    "card_type": card_config["card_type"],
+                    "segment_type": segment["card_segment_type"],
+                    "text": card_segment_details["text"],
+                },
+            )
             continue
-
-        return card_details
 
     def classify(self, image: MatLike) -> CardConfig | None:
         (x1, y1, x2, y2) = self.get_bounding_box_abs_coordinates(
