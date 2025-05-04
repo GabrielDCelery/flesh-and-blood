@@ -44,7 +44,10 @@ class CardClassifier:
         img_name = os.path.basename(card_path)
         for segment in card_config["segments"]:
             extract_exists = self.store.does_extract_exist(
-                img_name, self.model_name, segment["card_segment_type"]
+                img_name,
+                self.model_name,
+                card_config["card_type"],
+                segment["card_segment_type"],
             )
             if extract_exists:
                 self.logger.get().info(

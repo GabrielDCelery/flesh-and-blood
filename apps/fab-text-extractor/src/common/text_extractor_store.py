@@ -6,7 +6,7 @@ class TextExtractsStorage:
         pass
 
     def does_extract_exist(
-        self, img_name: str, model_name: str, segment_type: int
+        self, img_name: str, model_name: str, card_type: int, segment_type: int
     ) -> bool:
         return False
 
@@ -60,7 +60,7 @@ class TextExtractsSQLiteStorage(TextExtractsStorage):
             raise e
 
     def does_extract_exist(
-        self, img_name: str, model_name: str, segment_type: int
+        self, img_name: str, model_name: str, card_type: int, segment_type: int
     ) -> bool:
         try:
             conn = self._get_connection()
@@ -68,9 +68,9 @@ class TextExtractsSQLiteStorage(TextExtractsStorage):
             cur.execute(
                 """
                 SELECT 1 FROM extracts
-                WHERE img_name = ? AND model_name = ? AND segment_type = ?
+                WHERE img_name = ? AND model_name = ? AND card_type = ? AND segment_type = ?
                 """,
-                (img_name, model_name, segment_type),
+                (img_name, model_name, card_type, segment_type),
             )
             result = cur.fetchone()
             return result is not None
