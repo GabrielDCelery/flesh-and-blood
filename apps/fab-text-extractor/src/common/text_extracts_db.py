@@ -1,5 +1,5 @@
 import sqlite3
-from types import NoneType
+from sqlite3.dbapi2 import Connection
 
 
 class TextExtractsStorage:
@@ -23,13 +23,28 @@ class TextExtractsStorage:
 
 
 class TextExtractsSQLiteStorage(TextExtractsStorage):
-    db_name: str
+    _db_name: str
+    _connection: sqlite3.Connection | None
 
     def __init__(self, db_name: str):
-        self.db_name = db_name
+        self._db_name = db_name
+        self._connection = None
+
+    def _get_connection(self) -> sqlite3.Connection:
+        if self._connection is None:
+            self._connection = sqlite3.connect(self._db_name)
+        return self._connection
+
+    def close(self):
+        if self._connection is not None:
+            try:
+                self._connection.close()
+            finally:
+                self._connection = None
 
     def create_db(self):
-        with sqlite3.connect(self.db_name) as conn:
+        try:
+            conn = self._get_connection()
             cur = conn.cursor()
             cur.execute(
                 """CREATE TABLE IF NOT EXISTS extracts (
@@ -38,13 +53,18 @@ class TextExtractsSQLiteStorage(TextExtractsStorage):
                 card_type INT NOT NULL,
                 segment_type INT NOT NULL,
                 text TEXT NOT NULL,
-                PRIMARY KEY (img_name, model_name, card_type, segment_type))"""
+                PRIMARY KEY (img_name, model_name, card_type, segment_type))
+                """
             )
+        except sqlite3.Error as e:
+            self.close()
+            raise e
 
     def does_extract_exist(
         self, img_name: str, model_name: str, segment_type: int
     ) -> bool:
-        with sqlite3.connect(self.db_name) as conn:
+        try:
+            conn = self._get_connection()
             cur = conn.cursor()
             cur.execute(
                 """
@@ -55,6 +75,9 @@ class TextExtractsSQLiteStorage(TextExtractsStorage):
             )
             result = cur.fetchone()
             return result is not None
+        except sqlite3.Error as e:
+            self.close()
+            raise e
 
     def create_or_update_extract(
         self,
@@ -64,7 +87,8 @@ class TextExtractsSQLiteStorage(TextExtractsStorage):
         segment_type: int,
         text: str,
     ) -> None:
-        with sqlite3.connect(self.db_name) as conn:
+        try:
+            conn = self._get_connection()
             cur = conn.cursor()
             cur.execute(
                 """
@@ -75,3 +99,6 @@ class TextExtractsSQLiteStorage(TextExtractsStorage):
                 (img_name, model_name, card_type, segment_type, text),
             )
             conn.commit()
+        except sqlite3.Error as e:
+            self.close()
+            raise e

@@ -24,6 +24,7 @@ def main():
             f"finished extracting data from image",
             extra={"src_img": src_img, "data": json.dumps(card_info)},
         )
+    store.close()
 
 
 if __name__ == "__main__":
