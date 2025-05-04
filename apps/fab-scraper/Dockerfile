@@ -1,4 +1,4 @@
-FROM python:3.12-slim-bullseye as builder
+FROM python:3.12-slim-bullseye AS builder
 
 RUN apt update && \
     apt install -y libwebp-dev
@@ -20,7 +20,7 @@ COPY src ./src
 
 # Final stage
 #
-FROM python:3.12-slim-bullseye as runner
+FROM python:3.12-slim-bullseye AS runner
 
 RUN mkdir /downloads
 

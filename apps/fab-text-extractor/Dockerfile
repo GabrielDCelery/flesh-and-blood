@@ -1,4 +1,4 @@
-FROM python:3.12-slim-bullseye as builder
+FROM python:3.12-slim-bullseye AS builder
 
 RUN pip install poetry
 
@@ -17,7 +17,7 @@ COPY src ./src
 
 # Final stage
 #
-FROM python:3.12-slim-bullseye as runner
+FROM python:3.12-slim-bullseye AS runner
 
 WORKDIR /app
 
