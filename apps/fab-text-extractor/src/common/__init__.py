@@ -1,1 +1,2 @@
-from common.text_extracts_db import TextExtractsSQLiteStorage, TextExtractsStorage
+from common.text_extractor_logger import TextExtractorJSONLogger, TextExtractorLogger
+from common.text_extractor_store import TextExtractsSQLiteStorage, TextExtractsStorage

@@ -2,8 +2,7 @@ import os
 import zipfile
 from urllib.request import urlretrieve
 
-from common import TextExtractsSQLiteStorage
-from fab_bootstrap.logs import init_logger
+from common import TextExtractorJSONLogger, TextExtractsSQLiteStorage
 
 
 def main():
@@ -14,11 +13,10 @@ def main():
     text_detection_model_url = os.environ["TEXT_DETECTION_MODEL_URL"]
     db_path = os.environ["DB_PATH"]
 
-    logger = init_logger(log_level)
-
-    logger.info(f"create text extractor database", extra={"db_path": db_path})
-
     storage = TextExtractsSQLiteStorage(db_path)
+    logger = TextExtractorJSONLogger(log_level)
+
+    logger.get().info(f"create text extractor database", extra={"db_path": db_path})
 
     storage.create_db()
 
@@ -28,7 +26,7 @@ def main():
 
     language_model_file_name = language_model_url.split("/")[-1]
 
-    logger.info(
+    logger.get().info(
         f"retrieving lanugage model",
         extra={"language_model_url": language_model_url},
     )
@@ -37,7 +35,7 @@ def main():
 
     text_detection_model_file_name = text_detection_model_url.split("/")[-1]
 
-    logger.info(
+    logger.get().info(
         f"retrieving text detection model",
         extra={"text_detection_model_url": text_detection_model_url},
     )
@@ -45,7 +43,7 @@ def main():
     urlretrieve(text_detection_model_url, text_detection_model_file_name)
 
     with zipfile.ZipFile(language_model_file_name, "r") as zip_ref:
-        logger.info(
+        logger.get().info(
             f"extract lanugage model",
             extra={
                 "target_dir_path": target_dir_path,
@@ -55,7 +53,7 @@ def main():
         zip_ref.extractall(target_dir_path)
 
     with zipfile.ZipFile(text_detection_model_file_name, "r") as zip_ref:
-        logger.info(
+        logger.get().info(
             f"extract lanugage model",
             extra={
                 "target_dir_path": target_dir_path,

@@ -6,8 +6,7 @@ import easyocr
 import numpy as np
 from cv2.typing import MatLike
 
-from common import TextExtractsStorage
-from common.text_extracts_db import TextExtractsStorage
+from common import TextExtractorLogger, TextExtractsStorage
 from fab_extract import card_config
 from fab_extract.card_config import CARD_SEGMENT_TYPE
 from fab_extract.types import (
@@ -24,11 +23,15 @@ class CardClassifier:
     model_name: str
     ocr_reader: easyocr.Reader
     store: TextExtractsStorage
+    logger: TextExtractorLogger
 
-    def __init__(self, models_dir: str, store: TextExtractsStorage):
+    def __init__(
+        self, models_dir: str, store: TextExtractsStorage, logger: TextExtractorLogger
+    ):
         self.model_name = os.path.basename(models_dir)
         self.ocr_reader = easyocr.Reader(["en"], model_storage_directory=models_dir)
         self.store = store
+        self.logger = logger
 
     def extract_details(self, card_path: str) -> CardDetails | None:
         image = cv2.imread(card_path)
