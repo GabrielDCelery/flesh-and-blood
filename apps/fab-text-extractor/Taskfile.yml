@@ -29,6 +29,7 @@ tasks:
     vars:
       FAB_CARDS_VOLUME: fab-cards-prepared
       MODELS_DIR: /models
+      MODEL_NAME: v1.3-default
       IMG_SRC_DIR: /img_src
       SET_NAME: '{{.SET_NAME}}'
     cmds:
