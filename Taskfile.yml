@@ -6,17 +6,22 @@ includes:
   fab-text-extractor:
     dir: ./apps/fab-text-extractor/
     taskfile: ./apps/fab-text-extractor/Taskfile.yml
+  fab-seeder:
+    dir: ./apps/fab-seeder/
+    taskfile: ./apps/fab-seeder/Taskfile.yml
 tasks:
   build:
     cmds:
       - task: fab-scraper:build
       - task: fab-text-extractor:build
+      - task: fab-seeder:build
   bootstrap:
     cmds:
       - docker volume create fab-cards-scraped
       - docker volume create fab-cards-prepared
       - docker volume create fab-cards-models
       - docker volume create fab-cards-text-extracts-db
+      - docker volume create fab-app-db
       - task fab-text-extractor:bootstrap
   scrape:
     cmd: task fab-scraper:scrape-all
@@ -24,6 +29,8 @@ tasks:
     cmd: task fab-scraper:prepare-all
   extract:
     cmd: task fab-text-extractor:extract-all
+  seed:
+    cmd: task fab-seeder:seed
   run:
     cmds:
       - task build
@@ -31,6 +38,7 @@ tasks:
       - task scrape
       - task prepare
       - task extract
+      - task seed
   # get-data-from-scraper:
   #   cmds:
   #     - mkdir -p fab-cards
