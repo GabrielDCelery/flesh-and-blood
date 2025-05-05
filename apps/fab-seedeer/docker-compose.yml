@@ -1,0 +1,41 @@
+services:
+  fab-app-db:
+    image: postgres:17.4
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: fab-app
+      POSTGRES_PASSWORD: ${FAB_APP_DB_PASSWORD}
+    ports:
+      - 5432:5432
+    volumes:
+      - fab-app-db:/var/lib/postgresql/data # Add this volume mount
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  fab-seeder:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ${DOCKER_IMAGE_NAME}
+    volumes:
+      - fab-cards-text-extracts-db:/mnt/fab-cards-text-extracts-db
+      # restart: unless-stopped
+    environment:
+      FAB_EXTRACTS_DB_DRIVER: sqlite3
+      FAB_EXTRACTS_DSN: /mnt/fab-cards-text-extracts-db/text-extracts.sqlite
+      FAB_APP_DB_DRIVER: postgres
+      FAB_APP_DSN: postgres://postgres:${FAB_APP_DB_PASSWORD}@fab-app-db:5432/fab-app?sslmode=disable
+      FAB_APP_DB_MIGRATIONS_DIR: /app/migrations
+    depends_on:
+      fab-app-db:
+        condition: service_healthy
+volumes:
+  fab-cards-text-extracts-db:
+    name: fab-cards-text-extracts-db
+    external: true
+  fab-app-db:
+    name: fab-app-db
+    external: true

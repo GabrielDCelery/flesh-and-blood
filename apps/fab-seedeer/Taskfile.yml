@@ -1,0 +1,11 @@
+version: '3'
+vars:
+  DOCKER_IMAGE_NAME: fab/seeder:1.0.0
+tasks:
+  build:
+    cmd: docker build . -t {{.DOCKER_IMAGE_NAME}}
+  seed:
+    cmd: |
+      DOCKER_IMAGE_NAME={{.DOCKER_IMAGE_NAME}} \
+      docker compose up \
+      --build
