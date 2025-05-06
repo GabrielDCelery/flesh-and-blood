@@ -136,6 +136,12 @@ func main() {
 			log.Fatalln(err)
 		}
 	}
+
+	_, err = app_db.Exec(`REFRESH MATERIALIZED VIEW card_details;`)
+
+	if err != nil {
+		log.Fatalln(err)
+	}
 }
 
 func getCardTypeString(cardType int) string {
