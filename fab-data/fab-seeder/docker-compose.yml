@@ -1,5 +1,5 @@
 services:
-  fab-app-db:
+  fab-search-db:
     image: postgres:17.4
     restart: unless-stopped
     environment:
@@ -9,7 +9,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - fab-app-db:/var/lib/postgresql/data # Add this volume mount
+      - fab-search-db:/var/lib/postgresql/data # Add this volume mount
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
@@ -27,15 +27,15 @@ services:
       FAB_EXTRACTS_DB_DRIVER: sqlite3
       FAB_EXTRACTS_DSN: /mnt/fab-cards-text-extracts-db/text-extracts.sqlite
       FAB_APP_DB_DRIVER: postgres
-      FAB_APP_DSN: postgres://postgres:${FAB_APP_DB_PASSWORD}@fab-app-db:5432/fab-app?sslmode=disable
+      FAB_APP_DSN: postgres://postgres:${FAB_APP_DB_PASSWORD}@fab-search-db:5432/fab-app?sslmode=disable
       FAB_APP_DB_MIGRATIONS_DIR: /app/migrations
     depends_on:
-      fab-app-db:
+      fab-search-db:
         condition: service_healthy
 volumes:
   fab-cards-text-extracts-db:
     name: fab-cards-text-extracts-db
     external: true
-  fab-app-db:
-    name: fab-app-db
+  fab-search-db:
+    name: fab-search-db
     external: true
