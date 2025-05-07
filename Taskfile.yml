@@ -1,14 +1,14 @@
 version: '3'
 includes:
   fab-scraper:
-    dir: ./apps/fab-scraper/
-    taskfile: ./apps/fab-scraper/Taskfile.yml
+    dir: ./fab-data/fab-scraper/
+    taskfile: ./fab-data/fab-scraper/Taskfile.yml
   fab-text-extractor:
-    dir: ./apps/fab-text-extractor/
-    taskfile: ./apps/fab-text-extractor/Taskfile.yml
+    dir: ./fab-data/fab-text-extractor/
+    taskfile: ./fab-data/fab-text-extractor/Taskfile.yml
   fab-seeder:
-    dir: ./apps/fab-seeder/
-    taskfile: ./apps/fab-seeder/Taskfile.yml
+    dir: ./fab-data/fab-seeder/
+    taskfile: ./fab-data/fab-seeder/Taskfile.yml
 tasks:
   build:
     cmds:
