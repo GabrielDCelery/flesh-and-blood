@@ -14,7 +14,10 @@ func main() {
 		log.Fatalf("failed to initialize config: %v", err)
 	}
 	db, err := database.InitDB(database.DBConfig{
-		Dsn: appConfig.DBDsn,
+		Dsn:                      appConfig.DBDsn,
+		MaxOpenConns:             25,
+		MaxIdleConns:             5,
+		ConnMaxLifetimeInMinutes: 5,
 	})
 	if err != nil {
 		log.Fatalf("failed to initialize database: %v", err)
